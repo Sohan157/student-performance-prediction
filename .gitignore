@@ -1,0 +1,34 @@
+# Node / Next.js
+node_modules/
+.next/
+out/
+
+# Python
+__pycache__/
+*.pyc
+
+# ML artifacts
+models/*.pkl
+data/*.csv
+
+# Env
+.env*
+
+# Logs
+*.log
+
+# Vercel
+.vercel
+
+# TypeScript
+*.tsbuildinfo
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
