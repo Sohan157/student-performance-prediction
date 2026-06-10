@@ -32,3 +32,15 @@ Thumbs.db
 
 # VS Code
 .vscode/
+
+# Virtual Environment
+venv/
+
+# FastAPI cache
+.pytest_cache/
+
+# Python cache
+*.pyo
+
+# Mac/Linux temp
+*.swp

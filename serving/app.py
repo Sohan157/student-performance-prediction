@@ -4,6 +4,7 @@ from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 import pandas as pd
 from pathlib import Path
+from fastapi import UploadFile, File
 
 # ---------------------------
 # App Setup
@@ -53,6 +54,82 @@ def home():
 def health():
     return {"status": "ok", "model_loaded": model is not None}
 
+@app.post("/upload")
+async def upload_excel(file: UploadFile = File(...)):
+    df = pd.read_excel(file.file)
+
+    students = []
+
+    high = 0
+    medium = 0
+    low = 0
+
+    for _, row in df.iterrows():
+
+        final_ia = row["Final IA Marks (50M)"]
+
+        # Risk Classification
+        if final_ia < 25:
+            risk = "High"
+            high += 1
+
+        elif final_ia < 40:
+            risk = "Medium"
+            medium += 1
+
+        else:
+            risk = "Low"
+            low += 1
+
+        # Suggestions Logic
+        suggestions = []
+
+        ia1 = row["IA 1 (25M)"]
+        ia2 = row["IA 2 (25 M)"]
+        cca3 = row["CCA 3(5M)"]
+
+        if ia2 > ia1:
+            suggestions.append(
+                "Performance improving. Maintain current preparation."
+            )
+
+        elif ia2 < ia1:
+            suggestions.append(
+                "Performance declining. Review recent topics."
+            )
+
+        if cca3 <= 2:
+            suggestions.append(
+                "Focus on assignment and activity completion."
+            )
+
+        if final_ia < 25:
+            suggestions.append(
+                "Immediate faculty intervention recommended."
+            )
+
+        if not suggestions:
+            suggestions.append(
+                "Keep up the good work."
+            )
+
+        students.append({
+            "usn": row["USN"],
+            "name": row["Name"],
+            "final_ia": final_ia,
+            "risk_level": risk,
+            "suggestions": suggestions
+        })
+
+    return {
+        "summary": {
+            "total_students": len(df),
+            "high_risk": high,
+            "medium_risk": medium,
+            "low_risk": low
+        },
+        "students": students
+    }
 # ---------------------------
 # Suggestions
 # ---------------------------
