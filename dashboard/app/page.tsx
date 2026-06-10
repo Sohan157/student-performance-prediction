@@ -64,7 +64,7 @@ export default function Home() {
     formData.append("file", file)
 
     const res = await fetch(
-      "http://localhost:8000/upload",
+      "https://student-performance-prediction-nw5k.onrender.com/upload",
       {
         method: "POST",
         body: formData
