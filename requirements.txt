@@ -9,3 +9,8 @@ streamlit
 requests
 python-multipart
 openpyxl
+plotly          # Interactive pie charts and graphs
+fpdf2           # PDF report generation
+matplotlib      # Charts if not using Plotly
+seaborn         # Statistical visualizations (optional)
+xlsxwriter 
