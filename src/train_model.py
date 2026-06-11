@@ -11,7 +11,16 @@ from pipeline import preprocessor
 df = pd.read_csv("../data/students.csv")
 
 # Features & target
-X = df.drop(columns=["pass", "final_score"])
+features = [
+    "study_hours",
+    "attendance",
+    "quiz_score",
+    "assignment_score",
+    "midterm_score",
+    "projects_completed"
+]
+
+X = df[features]
 y = df["pass"]
 
 # Train-test split
