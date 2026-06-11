@@ -8,7 +8,7 @@ __pycache__/
 *.pyc
 
 # ML artifacts
-models/*.pkl
+#models/*.pkl
 data/*.csv
 
 # Env
